@@ -1,8 +1,8 @@
 {
-  "name": "eqc-vue-plus",
-  "version": "4.8.1",
+  "name": "eqc-ui",
+  "version": "1.0.0",
   "description": "EQC-设备质控管理系统",
-  "author": "LionLi",
+  "author": "yunpeng.zhang",
   "license": "MIT",
   "scripts": {
     "dev": "vite",

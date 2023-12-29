@@ -183,7 +183,7 @@ const data = reactive({
     pageSize: 10,
     tableName: undefined,
     tableComment: undefined,
-    dataName: "postgres"
+    dataName: "master"
   },
   preview: {
     open: false,
