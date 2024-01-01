@@ -133,3 +133,10 @@ export function deptTreeSelect() {
     method: 'get'
   })
 }
+
+export function userOptionsSelect() {
+  return request({
+    url: '/system/user/optionsSelect',
+    method: 'get'
+  })
+}

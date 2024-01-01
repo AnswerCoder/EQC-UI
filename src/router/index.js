@@ -157,6 +157,20 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
+  },
+  {
+    path: '/equipments/consumables',
+    component: Layout,
+    hidden: true,
+    permissions: ['equipment:consumables:list'],
+    children: [
+      {
+        path: 'index/:equipmentId(\\d+)',
+        component: () => import('@/views/equipments/consumables'),
+        name: 'Consumables',
+        meta: { title: '设备耗材', activeMenu: '/equipments' }
+      }
+    ]
   }
 ]
 

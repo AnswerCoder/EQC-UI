@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询设备耗材列表
 export function listConsumables(query) {
   return request({
-    url: '/system/consumables/list',
+    url: '/equipment/consumables/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listConsumables(query) {
 // 查询设备耗材详细
 export function getConsumables(consumableId) {
   return request({
-    url: '/system/consumables/' + consumableId,
+    url: '/equipment/consumables/' + consumableId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getConsumables(consumableId) {
 // 新增设备耗材
 export function addConsumables(data) {
   return request({
-    url: '/system/consumables',
+    url: '/equipment/consumables',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addConsumables(data) {
 // 修改设备耗材
 export function updateConsumables(data) {
   return request({
-    url: '/system/consumables',
+    url: '/equipment/consumables',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateConsumables(data) {
 // 删除设备耗材
 export function delConsumables(consumableId) {
   return request({
-    url: '/system/consumables/' + consumableId,
+    url: '/equipment/consumables/' + consumableId,
     method: 'delete'
   })
 }

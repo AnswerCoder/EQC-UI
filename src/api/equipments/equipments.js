@@ -42,3 +42,11 @@ export function delEquipments(equipmentId) {
     method: 'delete'
   })
 }
+
+// 获取设备选择框列表
+export function optionSelect() {
+  return request({
+    url: '/equipments/optionSelect',
+    method: 'get'
+  })
+}
