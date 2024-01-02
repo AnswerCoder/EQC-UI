@@ -34,7 +34,7 @@
       <el-form-item label="所属科室" prop="department">
         <el-tree-select
           v-model="queryParams.department"
-          :data="deptOptions"
+          :data="deptTreeOptions"
           :props="{ value: 'id', label: 'label', children: 'children' }"
           value-key="id"
           placeholder="请选择所属科室"
@@ -124,7 +124,7 @@
       <el-table-column label="供应商" align="center" prop="equipmentSupplier" />
       <el-table-column label="所属科室" align="center" prop="department">
         <template #default="scope">
-          <span>{{ scope.row.department }}</span>
+          <span>{{ scope.row.departmentName }}</span>
         </template>
       </el-table-column>
 
@@ -187,7 +187,7 @@
         <el-form-item label="所属科室" prop="department">
           <el-tree-select
             v-model="form.department"
-            :data="deptOptions"
+            :data="deptTreeOptions"
             :props="{ value: 'id', label: 'label', children: 'children' }"
             value-key="id"
             placeholder="请选择所属科室"
@@ -238,12 +238,12 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 const title = ref("");
-const deptOptions = ref([]);
+const deptTreeOptions = ref([]);
 
 /** 查询部门下拉树结构 */
 function getDeptTree() {
   deptTreeSelect().then((response) => {
-    deptOptions.value = response.data;
+    deptTreeOptions.value = response.data;
   });
 }
 

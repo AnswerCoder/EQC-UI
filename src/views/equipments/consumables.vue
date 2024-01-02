@@ -58,7 +58,11 @@
         />
       </el-form-item> -->
       <el-form-item label="负责人" prop="chargeUser">
-        <el-select v-model="form.chargeUser" placeholder="请选择负责人" @keyup.enter="handleQuery">
+        <el-select
+          v-model="form.chargeUser"
+          placeholder="请选择负责人"
+          @keyup.enter="handleQuery"
+        >
           <el-option
             v-for="item in userOptions"
             :key="item.userId"
@@ -130,37 +134,45 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column
+      <!-- <el-table-column
         label="主键"
         align="center"
         prop="consumableId"
         v-if="true"
-      />
-      <el-table-column label="设备" align="center" prop="equipmentId" />
+      /> -->
+      <el-table-column label="设备" align="center" prop="equipmentId" >
+        <template #default="scope">
+          <span>{{equipmentOptions.find(option=>option.equipmentId===scope.row.equipmentId)?.equipmentName}}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="耗材名称" align="center" prop="consumableName" />
       <el-table-column label="耗材编号" align="center" prop="consumableNo" />
-      <el-table-column
-        label="开始使用时间"
-        align="center"
-        prop="activationTime"
-        width="180"
-      >
+      <el-table-column label="开始使用时间" align="center" prop="activationTime" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.activationTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
       <el-table-column label="使用期效" align="center" prop="validity">
         <template #default="scope">
-          <span>{{ scope.row.validity }}{{ scope.row.validityUint }}</span>
+          <span>{{ scope.row.validity + sys_time_unit.find(item=>item.value===scope.row.validityUint)?.label}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="负责人" align="center" prop="chargeUser" />
-      <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column label="负责人" align="center" prop="chargeUser" >
+        <template #default="scope">
+          <span>{{ userOptions.find(option=>option.userId===scope.row.chargeUser)?.nickName}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" align="center" prop="status" >
+        <template #default="scope">
+          <dict-tag :options="consumable_status" :value="scope.row.status" />
+        </template>
+      </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column
         label="操作"
         align="center"
         class-name="small-padding fixed-width"
+        width="200"
       >
         <template #default="scope">
           <el-button
@@ -200,11 +212,7 @@
         label-width="120px"
       >
         <el-form-item label="设备" prop="equipmentId">
-          <el-select
-            v-model="defaultEquipment"
-            placeholder="请选择设备"
-            disabled
-          >
+          <el-select v-model="form.equipmentId" placeholder="请选择设备">
             <el-option
               v-for="item in equipmentOptions"
               :key="item.equipmentId"
@@ -221,6 +229,16 @@
         </el-form-item>
         <el-form-item label="耗材编号" prop="consumableNo">
           <el-input v-model="form.consumableNo" placeholder="请输入耗材编号" />
+        </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择状态">
+            <el-option
+              v-for="dict in consumable_status"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="开始使用时间" prop="activationTime">
           <el-date-picker
@@ -307,7 +325,10 @@ const defaultEquipment = ref("");
 const equipmentOptions = ref([]);
 const userOptions = ref([]);
 const route = useRoute();
-const { sys_time_unit } = proxy.useDict("sys_time_unit");
+const { sys_time_unit, consumable_status } = proxy.useDict(
+  "sys_time_unit",
+  "consumable_status"
+);
 
 const data = reactive({
   form: {},
@@ -327,9 +348,7 @@ const data = reactive({
     consumableId: [
       { required: true, message: "主键不能为空", trigger: "blur" },
     ],
-    equipmentId: [
-      { required: true, message: "设备id不能为空", trigger: "blur" },
-    ],
+    equipmentId: [{ required: true, message: "设备不能为空", trigger: "blur" }],
     consumableName: [
       { required: true, message: "耗材名称不能为空", trigger: "blur" },
     ],
@@ -346,19 +365,9 @@ const data = reactive({
       { required: false, message: "使用期效单位不能为空", trigger: "blur" },
     ],
     chargeUser: [
-      {
-        required: false,
-        message: "负责人不能为空",
-        trigger: "blur",
-      },
+      { required: false, message: "负责人不能为空", trigger: "blur" },
     ],
-    status: [
-      {
-        required: true,
-        message: "状态 0正在使用，1已报废 2未使用过不能为空",
-        trigger: "change",
-      },
-    ],
+    status: [{ required: true, message: "状态不能为空", trigger: "change" }],
     remark: [{ required: false, message: "备注不能为空", trigger: "blur" }],
   },
 });
