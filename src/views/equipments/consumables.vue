@@ -59,7 +59,7 @@
       </el-form-item> -->
       <el-form-item label="负责人" prop="chargeUser">
         <el-select
-          v-model="form.chargeUser"
+          v-model="queryParams.chargeUser"
           placeholder="请选择负责人"
           @keyup.enter="handleQuery"
         >
@@ -212,7 +212,7 @@
         label-width="120px"
       >
         <el-form-item label="设备" prop="equipmentId">
-          <el-select v-model="form.equipmentId" placeholder="请选择设备">
+          <el-select v-model="form.equipmentId" placeholder="请选择设备" disabled>
             <el-option
               v-for="item in equipmentOptions"
               :key="item.equipmentId"
@@ -309,6 +309,8 @@ import {
 } from "@/api/equipments/consumables";
 import { optionSelect as getEquipmentOptionSelect } from "@/api/equipments/equipments";
 import { userOptionsSelect as getUserOptionSelect } from "@/api/system/user";
+import useUserStore from '@/store/modules/user';
+import { ref } from "vue";
 const { proxy } = getCurrentInstance();
 
 const consumablesList = ref([]);
@@ -321,7 +323,6 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 const title = ref("");
-const defaultEquipment = ref("");
 const equipmentOptions = ref([]);
 const userOptions = ref([]);
 const route = useRoute();
@@ -329,6 +330,10 @@ const { sys_time_unit, consumable_status } = proxy.useDict(
   "sys_time_unit",
   "consumable_status"
 );
+const defaultEquipment = ref("");
+const defaultValidityUint = ref("M");
+const defaultStatus = ref("0");
+const defaultChargeUser = useUserStore().id;
 
 const data = reactive({
   form: {},
@@ -440,6 +445,7 @@ function handleQuery() {
 /** 重置按钮操作 */
 function resetQuery() {
   proxy.resetForm("queryRef");
+  queryParams.value.equipmentId = defaultEquipment;
   handleQuery();
 }
 
@@ -455,6 +461,10 @@ function handleAdd() {
   reset();
   open.value = true;
   title.value = "添加设备耗材";
+  form.value.equipmentId = queryParams.value.equipmentId;
+  form.value.status = defaultStatus;
+  form.value.validityUint = defaultValidityUint;
+  form.value.chargeUser = defaultChargeUser;
 }
 
 /** 修改按钮操作 */
