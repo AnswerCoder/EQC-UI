@@ -162,7 +162,7 @@ export const dynamicRoutes = [
     path: '/equipments/consumables',
     component: Layout,
     hidden: true,
-    permissions: ['equipment:consumables:list'],
+    permissions: ['equipments:list'],
     children: [
       {
         path: 'index/:equipmentId(\\d+)',
