@@ -86,7 +86,7 @@
           plain
           icon="Plus"
           @click="handleAdd"
-          v-hasPermi="['equipment:consumables:add']"
+          v-hasPermi="['equipments:add']"
           >新增</el-button
         >
       </el-col>
@@ -97,7 +97,7 @@
           icon="Edit"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['equipment:consumables:edit']"
+          v-hasPermi="['equipments:edit']"
           >修改</el-button
         >
       </el-col>
@@ -108,7 +108,7 @@
           icon="Delete"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['equipment:consumables:remove']"
+          v-hasPermi="['equipments:remove']"
           >删除</el-button
         >
       </el-col>
@@ -118,7 +118,7 @@
           plain
           icon="Download"
           @click="handleExport"
-          v-hasPermi="['equipment:consumables:export']"
+          v-hasPermi="['equipments:export']"
           >导出</el-button
         >
       </el-col>
@@ -180,7 +180,7 @@
             type="primary"
             icon="Edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:consumables:edit']"
+            v-hasPermi="['equipments:edit']"
             >修改</el-button
           >
           <el-button
@@ -188,7 +188,7 @@
             type="primary"
             icon="Delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:consumables:remove']"
+            v-hasPermi="['equipments:remove']"
             >删除</el-button
           >
         </template>

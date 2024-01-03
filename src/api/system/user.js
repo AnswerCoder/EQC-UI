@@ -126,10 +126,18 @@ export function updateAuthRole(data) {
   })
 }
 
-// 查询部门下拉树结构
+// 查询部门下拉树结构,包含数据范围权限
 export function deptTreeSelect() {
   return request({
     url: '/system/user/deptTree',
+    method: 'get'
+  })
+}
+
+// 查询部门下拉树结构，无数据范围权限，全部部门用于下拉框
+export function deptTreeOptionsSelect() {
+  return request({
+    url: '/system/user/deptTreeOption',
     method: 'get'
   })
 }

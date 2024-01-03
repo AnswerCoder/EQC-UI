@@ -225,7 +225,7 @@ import {
   addEquipments,
   updateEquipments,
 } from "@/api/equipments/equipments";
-import { deptTreeSelect } from "@/api/system/user";
+import { deptTreeOptionsSelect } from "@/api/system/user";
 const { proxy } = getCurrentInstance();
 
 const equipmentsList = ref([]);
@@ -242,7 +242,7 @@ const deptTreeOptions = ref([]);
 
 /** 查询部门下拉树结构 */
 function getDeptTree() {
-  deptTreeSelect().then((response) => {
+  deptTreeOptionsSelect().then((response) => {
     deptTreeOptions.value = response.data;
   });
 }
