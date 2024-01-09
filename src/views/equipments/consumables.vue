@@ -133,36 +133,41 @@
       :data="consumablesList"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column type="selection" width="40" align="center" />
       <!-- <el-table-column
         label="主键"
         align="center"
         prop="consumableId"
         v-if="true"
       /> -->
-      <el-table-column label="设备" align="center" prop="equipmentId" >
+      <el-table-column label="设备" align="center" prop="equipmentId" width="150">
         <template #default="scope">
           <span>{{equipmentOptions.find(option=>option.equipmentId===scope.row.equipmentId)?.equipmentName}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="耗材名称" align="center" prop="consumableName" />
-      <el-table-column label="耗材编号" align="center" prop="consumableNo" />
-      <el-table-column label="开始使用时间" align="center" prop="activationTime" width="180">
+      <el-table-column label="耗材名称" align="center" prop="consumableName" width="150"/>
+      <el-table-column label="耗材编号" align="center" prop="consumableNo"  width="200"/>
+      <el-table-column label="开始使用时间" align="center" prop="activationTime" width="110">
         <template #default="scope">
           <span>{{ parseTime(scope.row.activationTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="使用期效" align="center" prop="validity">
+      <el-table-column label="使用期效" align="center" prop="validity" width="100">
         <template #default="scope">
           <span>{{ scope.row.validity + sys_time_unit.find(item=>item.value===scope.row.validityUint)?.label}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="负责人" align="center" prop="chargeUser" >
+      <el-table-column label="到期时间" align="center" prop="dueTime" width="100">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.dueTime, "{y}-{m}-{d}") }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="负责人" align="center" prop="chargeUser" width="100">
         <template #default="scope">
           <span>{{ userOptions.find(option=>option.userId===scope.row.chargeUser)?.nickName}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status" >
+      <el-table-column label="状态" align="center" prop="status" width="100">
         <template #default="scope">
           <dict-tag :options="consumable_status" :value="scope.row.status" />
         </template>
