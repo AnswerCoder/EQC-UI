@@ -130,6 +130,7 @@
 
     <el-table
       v-loading="loading"
+      :cell-style="cellStyle"
       :data="consumablesList"
       @selection-change="handleSelectionChange"
     >
@@ -145,14 +146,14 @@
           <span>{{equipmentOptions.find(option=>option.equipmentId===scope.row.equipmentId)?.equipmentName}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="耗材名称" align="center" prop="consumableName" width="150"/>
+      <el-table-column label="耗材名称" align="center" prop="consumableName" width="220"/>
       <el-table-column label="耗材编号" align="center" prop="consumableNo"  width="200"/>
       <el-table-column label="开始使用时间" align="center" prop="activationTime" width="110">
         <template #default="scope">
           <span>{{ parseTime(scope.row.activationTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="使用期效" align="center" prop="validity" width="100">
+      <el-table-column label="使用期效" align="center" prop="validity">
         <template #default="scope">
           <span>{{ scope.row.validity + sys_time_unit.find(item=>item.value===scope.row.validityUint)?.label}}</span>
         </template>
@@ -162,12 +163,12 @@
           <span>{{ parseTime(scope.row.dueTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="负责人" align="center" prop="chargeUser" width="100">
+      <el-table-column label="负责人" align="center" prop="chargeUser">
         <template #default="scope">
           <span>{{ userOptions.find(option=>option.userId===scope.row.chargeUser)?.nickName}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status" width="100">
+      <el-table-column label="状态" align="center" prop="status">
         <template #default="scope">
           <dict-tag :options="consumable_status" :value="scope.row.status" />
         </template>
@@ -413,6 +414,25 @@ function getList() {
     loading.value = false;
   });
 }
+
+// 根据返回的每一行的数据判断,修改这一行的样式
+const cellStyle = (data) => {
+  const dueTime = new Date(data.row.dueTime);
+  const currentDate = new Date();
+  const sevenDaysAfter = new Date(currentDate);
+  sevenDaysAfter.setDate(currentDate.getDate() + 7);
+  if (dueTime < currentDate) {
+    return {
+      color: "#000",
+      background: "#fabcc3",
+    };
+  }else if (dueTime < sevenDaysAfter) {
+    return {
+      color: "#000",
+      background: "#e6a23c",
+    };
+  }
+};
 
 // 取消按钮
 function cancel() {
